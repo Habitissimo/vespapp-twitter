@@ -6,4 +6,4 @@ itsdangerous==0.24
 oauthlib==1.0.3
 requests==2.9.1
 requests-oauthlib==0.6.1
-tweetpy==0.1
+tweepy==3.5.0
