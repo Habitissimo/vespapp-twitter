@@ -5,9 +5,12 @@ import json
 
 
 class TweetListener(tweepy.StreamListener):
-    def on_data(self, data):
-        #avist = avistamientoTweet()
+    
+    def __init__(self, tweet):
+        self.tweet = tweet
 
+
+    def on_data(self, data):
         # Twitter returns data in JSON format - we need to decode it first
         tweet = json.loads(data)
 
@@ -20,7 +23,7 @@ class TweetListener(tweepy.StreamListener):
                     shutil.copyfileobj(response.raw, out_file)
                 del response
 
-                print (tweet['id'])
+                print (tweet['id_str'])
                 print (tweet['created_at'])
                 print (tweet['user']['name'])
                 print (tweet['user']['screen_name'])
@@ -28,12 +31,9 @@ class TweetListener(tweepy.StreamListener):
                 print (tweet['entities']['media'][0]['media_url_https'])
                 print (tweet['text'].encode('ascii', 'ignore'))
         else:
-            print("non")
+            print("no photo")
 
-                
-
-        #t_write = Tweet()
-        #t_write.reply()
+        self.tweet.reply(tweet['user']['screen_name'], "hola", tweet['id_str'])
 
         return True
 
