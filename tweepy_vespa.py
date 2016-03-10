@@ -1,33 +1,21 @@
 import tweepy
-import json
+import tweet_listener
+
+from keys import keys
 
 # Authentication details. To  obtain these visit dev.twitter.com
-consumer_key = 'qO2wzYilhvmXsRii2zIw3FM1Z'
-consumer_secret = '1YddGeGfM3Wp53NFaGMkvXQwv9ek1colosRXx0nYLiUp72mbE4'
-access_token = '707877442795532288-cnU1gAHKCCLRUbVg8q4e3ofzMSSq79b'
-access_token_secret = 'apNn6kJu9Rq3W8j6TRAdgw2ZSfBys3uDDlmPNnEEvsSsF'
-
-
-class StdOutListener(tweepy.StreamListener):
-    def on_data(self, data):
-        # Twitter returns data in JSON format - we need to decode it first
-        decoded = json.loads(data)
-
-        # Also, we convert UTF-8 to ASCII ignoring all bad characters sent by users
-        print ('@%s: %s' % (decoded['user']['screen_name'], decoded['text'].encode('ascii', 'ignore')))
-        print ('')
-        return True
-
-    def on_error(self, status):
-        print (status)
+CONSUMER_KEY = keys['consumer_key']
+CONSUMER_SECRET = keys['consumer_secret']
+ACCESS_TOKEN = keys['access_token']
+ACCESS_TOKEN_SECRET = keys['access_token_secret']
 
 
 if __name__ == '__main__':
-    l = StdOutListener()
+    t_list = tweet_listener.TweetListener()
 
     # Create authentication token using our details
-    auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-    auth.set_access_token(access_token, access_token_secret)
+    auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
+    auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
 
     # Get API handler
     #api = tweepy.API(auth)
@@ -42,5 +30,5 @@ if __name__ == '__main__':
     # There are different kinds of streams: public stream, user stream, multi-user streams
     # In this example follow #programming tag
     # For more details refer to https://dev.twitter.com/docs/streaming-apis
-    stream = tweepy.Stream(auth, l)
-    stream.filter(track=['programming'])
+    stream = tweepy.Stream(auth, t_list)
+    stream.filter(track=['photo'])
