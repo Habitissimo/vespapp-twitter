@@ -1,6 +1,6 @@
 import tweepy
 import json
-
+import tweet
 # Authentication details. To  obtain these visit dev.twitter.com
 consumer_key = 'qO2wzYilhvmXsRii2zIw3FM1Z'
 consumer_secret = '1YddGeGfM3Wp53NFaGMkvXQwv9ek1colosRXx0nYLiUp72mbE4'
@@ -22,6 +22,7 @@ class StdOutListener(tweepy.StreamListener):
         print (status)
 
 
+
 if __name__ == '__main__':
     l = StdOutListener()
 
@@ -30,17 +31,9 @@ if __name__ == '__main__':
     auth.set_access_token(access_token, access_token_secret)
 
     # Get API handler
-    #api = tweepy.API(auth)
+    api = tweepy.API(auth)
 
-    #print ("Tweeting hello world...")
-    #print ("Check https://twitter.com/c4107142 to see the result")
-
-    # Let's tweet something!
-    # Since we can't tweet two identical statuses, we'll tweet our time aswell
-    #api.update_status('Hello world from tweepy 4!')
-
-    # There are different kinds of streams: public stream, user stream, multi-user streams
-    # In this example follow #programming tag
-    # For more details refer to https://dev.twitter.com/docs/streaming-apis
+    tweet = tweet.Tweet(api)
+    tweet.reply()    
     stream = tweepy.Stream(auth, l)
-    stream.filter(track=['programming'])
+    stream.filter(track=[''])
