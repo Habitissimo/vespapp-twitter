@@ -1,7 +1,3 @@
-<<<<<<< 59dbd577a02cffbd3ac6eae7e41ae6a3eb5742c0
-=======
-
->>>>>>> twitter improved
 class TweetUtils:
 
     @classmethod
