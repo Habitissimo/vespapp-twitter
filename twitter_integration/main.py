@@ -9,7 +9,6 @@ CONSUMER_SECRET = keys['consumer_secret']
 ACCESS_TOKEN = keys['access_token']
 ACCESS_TOKEN_SECRET = keys['access_token_secret']
 
-
 if __name__ == '__main__':
 
     # Create authentication token using our details
