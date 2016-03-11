@@ -8,8 +8,16 @@ class TelegramKeys:
             self.keys[chat_id] += [file_id]
         else:
             self.keys[chat_id] = [file_id]
-            # TODO lanzar un thread
+            # create and start thread
+            threading.Thread(target=time_out, args=[bot, update.message.chat_id]).start()
 
     def remove_key(self, chat_id):
         if chat_id in self.keys:
             del self.keys[chat_id]
+
+    # define time out function (threading)
+    def time_out(bot, chat_id):
+        # config time expiration
+        time.sleep(5)
+        KEYS.expiration()
+        bot.sendMessage(chat_id=chat_id, text="Ha agotado el tiempo de espera")
