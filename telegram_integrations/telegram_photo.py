@@ -14,7 +14,8 @@ class TelegramPhoto:
     @classmethod
     def get_file_id(cls, update):
         if update.message.photo:
-            return update.message.photo[3].file_id
+            photo_len = len(update.message.photo)
+            return update.message.photo[photo_len-1].file_id
         elif update.message.document:
             return update.message.document.file_id
         else:
