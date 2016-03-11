@@ -1,5 +1,5 @@
 import threading, time
-from telegram_integrations import Updater
+from telegram import Updater
 from telegram_integrations.telegram_keys import TelegramKeys
 from telegram_integrations.telegram_photo import TelegramPhoto
 
