@@ -1,4 +1,3 @@
-
 import tweepy
 import requests
 import json
@@ -7,7 +6,6 @@ import tweet_utils
 
 
 class TweetListener(tweepy.StreamListener):
-
 
     def __init__(self, tweet):
         self.tweet = tweet
@@ -48,7 +46,6 @@ class TweetListener(tweepy.StreamListener):
                 requests.post(self.url + '/sightings/' + str(sighting_id) + '/photos/', files={'file': bytes})
 
         return True
-
 
     def on_error(self, status):
         print (status)

@@ -1,10 +1,7 @@
-
 import tweepy
-
 import tweet
 import tweet_listener
 from keys import keys
-
 
 # Authentication details
 CONSUMER_KEY = keys['consumer_key']
