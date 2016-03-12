@@ -24,4 +24,3 @@ class TelegramPhoto:
     @classmethod
     def get_file(cls, bot, file_id):
         return bot.getFile(file_id)
-
