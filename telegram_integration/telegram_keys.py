@@ -11,7 +11,8 @@ class TelegramKeys:
         self.lock.acquire()
         try:
             if chat_id in self.keys:
-                self.keys[chat_id].update({'photos': file_id})
+                self.keys[chat_id]['photos'] += [file_id]
+                # self.keys[chat_id].update({'photos': [file_id]})
                 return True
             else:
                 self.keys[chat_id] = {'photos': [file_id]}

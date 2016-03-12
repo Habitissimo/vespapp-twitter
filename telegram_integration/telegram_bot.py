@@ -20,7 +20,7 @@ dispatcher = updater.dispatcher
 
 # start definition (cmd: /start)
 def start(bot, update):
-    bot.sendMessage(chat_id=update.message.chat_id, text="I'm a bot, please talk to me!")
+    bot.sendMessage(chat_id=update.message.chat_id, text="Hola, ¿Podrías mandarnos una foto y la localización?")
 
 # add /start dispatcher
 dispatcher.addTelegramCommandHandler('start', start)
@@ -34,11 +34,14 @@ def echo(bot, update):
         result = keys.add_photo(chat_id=update.message.chat_id, file_id=file_id)
         if not result:
             # create thread
-            # TODO start()
             thr = threading.Thread(target=time_out, args=[bot, update.message.chat_id])
+            thr.start()
 
         # image received
-        bot.sendMessage(chat_id=update.message.chat_id, text="Imagen recibida! Gracias por tu colaboración!")
+        if 'location' not in keys.get_key_by_id(update.message.chat_id):
+            bot.sendMessage(chat_id=update.message.chat_id, text="Imagen recibida! Gracias por tu colaboración! ¿Podrías mandarnos la localización?")
+        else:
+            bot.sendMessage(chat_id=update.message.chat_id, text="Imagen recibida! Gracias por tu colaboración!")
         # TODO send custom keyboard
 
     elif TelegramLocation.is_location(update):
@@ -48,28 +51,21 @@ def echo(bot, update):
         result = keys.add_location(chat_id=update.message.chat_id, latitude=latitude, longitude=longitude)
         if not result:
             # create thread
-            # TODO start()
             thr = threading.Thread(target=time_out, args=[bot, update.message.chat_id])
+            thr.start()
 
         # location received
-        bot.sendMessage(chat_id=update.message.chat_id, text="Localización recibida! Gracias por tu colaboración!")
+        if 'photos' not in keys.get_key_by_id(update.message.chat_id):
+            bot.sendMessage(chat_id=update.message.chat_id, text="Localización recibida! Gracias por tu colaboración! ¿Podrías enviarnos una foto?")
+        else:
+            bot.sendMessage(chat_id=update.message.chat_id, text="Localización recibida! Gracias por tu colaboración!")
         # TODO send custom keyboard
 
     else:
-        bot.sendMessage(chat_id=update.message.chat_id, text="No podemos procesar el mensaje")
+        bot.sendMessage(chat_id=update.message.chat_id, text="Gracias, pero no es ni una foto ni una localización")
 
 # add echo to dispatcher
 dispatcher.addTelegramMessageHandler(echo)
-
-
-# stop definition (cmd: /stop)
-def stop(bot, update):
-    bot.sendMessage(chat_id=update.message.chat_id, text="Hemos registrado su avispamiento!")
-    bot.sendMessage(chat_id=update.message.chat_id, text="Gracias por la colaboración!")
-    send_all(bot, update.message.chat_id)
-
-# add /stop dispatcher
-dispatcher.addTelegramCommandHandler('stop', stop)
 
 # start bot #
 updater.start_polling()
@@ -81,11 +77,10 @@ updater.start_polling()
 # define time out function (threading)
 def time_out(bot, chat_id):
     # config time expiration
-    time.sleep(2)
-    bot.sendMessage(chat_id=chat_id, text="Ha agotado el tiempo de espera")
-    stop(bot, chat_id)
-
-def send_all(bot, chat_id):
-    keys.add_type(chat_id=chat_id, type=1)
+    time.sleep(30)
+    keys.add_type(chat_id=chat_id, type=0)
     TelegramRequester.send_request(bot=bot, key=keys.get_key_by_id(chat_id))
     keys.remove_key(chat_id)
+    bot.sendMessage(chat_id=chat_id, text="Hemos registrado su avispamiento!")
+    bot.sendMessage(chat_id=chat_id, text="Gracias por la colaboración!")
+

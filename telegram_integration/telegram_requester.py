@@ -20,8 +20,8 @@ class TelegramRequester:
         payload['type'] = key['type']
         # try get location
         if 'location' in key:
-            payload['lat'] = key['location']['latitude']
-            payload['lng'] = key['location']['longitude']
+            payload['lat'] = key['location'][0]
+            payload['lng'] = key['location'][1]
 
         # do post
         payload['source'] = cls.SOURCE
