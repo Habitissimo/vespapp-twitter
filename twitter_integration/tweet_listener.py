@@ -30,7 +30,7 @@ class TweetListener(tweepy.StreamListener):
 
             # Create sighting
             response = requests.post(self.url + '/sightings/', data=payload)
-            if response.status == 201:
+            if response.status_code == 201:
                 sighting = json.loads(response.text)
                 sighting_id = sighting['id']
 
