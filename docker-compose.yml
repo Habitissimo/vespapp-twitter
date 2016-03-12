@@ -1,2 +1,7 @@
-worker:
-  build: .
+instagram_bot:
+    image: vespapp/integrations
+    command: "-m telegram_integration.telegram_bot"
+
+twitter_bot:
+    image: vespapp/integrations
+    command: "-m twitter_integration.main"
