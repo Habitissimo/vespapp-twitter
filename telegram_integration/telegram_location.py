@@ -9,6 +9,6 @@ class TelegramLocation:
     @classmethod
     def get_location(cls, update):
         if update.message.location:
-            return update.message.location.latitude, update.message.location.longitude
+            return update.message.chat.username, update.message.location.latitude, update.message.location.longitude
         else:
             return None

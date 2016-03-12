@@ -12,10 +12,7 @@ class TelegramRequester:
 
     @classmethod
     def send_request(cls, bot, key):
-        payload = {}
-        if 'type' not in key:
-            return False
-
+        payload = dict()
         # there are type and photo/s
         payload['type'] = key['type']
         # try get location
@@ -25,6 +22,7 @@ class TelegramRequester:
 
         # do post
         payload['source'] = cls.SOURCE
+        payload['contact'] = key['user']
         payload['free_text'] = "Free Text"
         response = requests.post(cls.URL + "/sightings/", data=payload)
 
