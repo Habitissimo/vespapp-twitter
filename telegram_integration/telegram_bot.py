@@ -26,7 +26,7 @@ def echo(bot, update):
         # add photo in keys
         file_id = TelegramPhoto.get_file_id(update)
         result = keys.add_photo(chat_id=update.message.chat_id, file_id=file_id)
-        if result is not None and not result:
+        if not result:
             # create thread
             # TODO start()
             thr = threading.Thread(target=time_out, args=[bot, update.message.chat_id])
@@ -40,7 +40,7 @@ def echo(bot, update):
         latitude, longitude = TelegramLocation.get_location(update)
         # add location in keys
         result = keys.add_location(chat_id=update.message.chat_id, latitude=latitude, longitude=longitude)
-        if result is not None and not result:
+        if not result:
             # create thread
             # TODO start()
             thr = threading.Thread(target=time_out, args=[bot, update.message.chat_id])

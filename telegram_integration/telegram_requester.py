@@ -1,4 +1,5 @@
-import requests, json
+import requests
+import json
 
 from urllib.request import urlopen
 from telegram_integration.telegram_photo import TelegramPhoto
@@ -39,6 +40,3 @@ class TelegramRequester:
                 open_photo = urlopen(photo_url)
                 photo_bytes = open_photo.read()
                 requests.post(cls.URL + "/sightings/" + str(sighting_id) + "/photos/", files={'file': photo_bytes})
-
-
-
