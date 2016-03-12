@@ -77,7 +77,7 @@ updater.start_polling()
 # define time out function (threading)
 def time_out(bot, chat_id):
     # config time expiration
-    time.sleep(30)
+    time.sleep(150)
     keys.add_type(chat_id=chat_id, type=0)
     TelegramRequester.send_request(bot=bot, key=keys.get_key_by_id(chat_id))
     keys.remove_key(chat_id)
