@@ -23,7 +23,7 @@ class TelegramKeys:
         self.lock.acquire()
         try:
             if chat_id in self.keys:
-                self.keys[chat_id] = {'location': [latitude, longitude]}
+                self.keys[chat_id].update({'location': [latitude, longitude]})
                 return True
             else:
                 self.keys[chat_id] = {'location': [latitude, longitude]}
@@ -38,7 +38,7 @@ class TelegramKeys:
                 self.keys[chat_id].update({'type': type})
                 return True
             else:
-                self.keys[chat_id].update({'type': type})
+                self.keys[chat_id] = {'type': type}
             return False
         finally:
             self.lock.release()
@@ -47,8 +47,7 @@ class TelegramKeys:
         self.lock.acquire()
         try:
             if chat_id in self.keys:
-                key = self.keys[chat_id]
-                return key
+                return self.keys[chat_id]
             return None
         finally:
             self.lock.release()
