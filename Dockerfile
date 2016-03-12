@@ -18,4 +18,4 @@ RUN apt-get update && \
 
 COPY . $APP_HOME
 
-ENTRYPOINT python
+ENTRYPOINT ["python"]
